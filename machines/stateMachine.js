@@ -9,6 +9,7 @@ class StateMachine {
     inputChar(char) {
         this.prevState = this.state
         if (this.state) {
+            //console.log(this.rules[this.state.name])
             this.state = this.rules[this.state.name](char)
         }
     }
@@ -16,6 +17,8 @@ class StateMachine {
     resetState() {
         this.prevState = {name: 'begin'}
         this.state = {name: 'begin'}
+        //console.log('Machine reset!')
     }
 }
+
 module.exports = StateMachine
