@@ -2,6 +2,7 @@ const IdentifierMachine = require("./machines/identifierMachine");
 const KeywordMachine = require("./machines/keywordMachine");
 const NumberMachine = require("./machines/numberMachine");
 const DelimiterMachine = require("./machines/delimiterMachine");
+const OperatorMachine = require("./machines/operatorMachine");
 
 function resetAllRules(machinesList) {
   machinesList.forEach((item) => {
@@ -10,7 +11,6 @@ function resetAllRules(machinesList) {
 }
 
 function getActiveName(machinesList) {
-  //console.log(machinesList);
   let activeMachines = [];
   for (let i = 0; i < machinesList.length; i++) {
     if (machinesList[i].state && machinesList[i].state.name === "end") {
@@ -28,15 +28,17 @@ const identifierMachine = new IdentifierMachine();
 const keywordMachine = new KeywordMachine();
 const numberMachine = new NumberMachine();
 const delimiterMachine = new DelimiterMachine();
+const operatorMachine = new OperatorMachine();
 
 const allRules = [
   identifierMachine,
   keywordMachine,
   numberMachine,
   delimiterMachine,
+  operatorMachine,
 ];
 
-const string = "const num = 23.4;\n    let abcconst = .4353\n";
+const string = "const num = 23.4;\n    let consta=.4353\n";
 const tokens = []; // Результирующий список токенов
 let charsCounter = 0; // счётчик символов в пределах одного токена
 
@@ -46,14 +48,14 @@ for (let i = 0; i < string.length; i++) {
   allRules.forEach((machine) => {
     machine.inputChar(string[i]);
     if (machine.state && machine.state.name != "end") {
-      console.log(
+      /* console.log(
         "symbol " +
           string[i] +
           " changed " +
           machine.name +
           " state to " +
           machine.state.name
-      );
+      ); */
       hasActiveMachine = true;
     }
   });
