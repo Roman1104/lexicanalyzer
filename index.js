@@ -1,6 +1,7 @@
 const IdentifierMachine = require("./machines/identifierMachine");
 const KeywordMachine = require("./machines/keywordMachine");
 const NumberMachine = require("./machines/numberMachine");
+const DelimiterMachine = require("./machines/delimiterMachine");
 
 function resetAllRules(machinesList) {
   machinesList.forEach((item) => {
@@ -9,7 +10,7 @@ function resetAllRules(machinesList) {
 }
 
 function getActiveName(machinesList) {
-  //console.log(machinesList)
+  //console.log(machinesList);
   let activeMachines = [];
   for (let i = 0; i < machinesList.length; i++) {
     if (machinesList[i].state && machinesList[i].state.name === "end") {
@@ -26,40 +27,48 @@ function getActiveName(machinesList) {
 const identifierMachine = new IdentifierMachine();
 const keywordMachine = new KeywordMachine();
 const numberMachine = new NumberMachine();
+const delimiterMachine = new DelimiterMachine();
 
-const allRules = [identifierMachine, keywordMachine, numberMachine];
-const string = "const num = 23.4;";
+const allRules = [
+  identifierMachine,
+  keywordMachine,
+  numberMachine,
+  delimiterMachine,
+];
+
+const string = "const num = 23.4;\n    let abcconst = .4353\n";
 const tokens = []; // Результирующий список токенов
 let charsCounter = 0; // счётчик символов в пределах одного токена
 
-for (let i = 0; i <= string.length; i++) {
+for (let i = 0; i < string.length; i++) {
   charsCounter++;
   let hasActiveMachine = false;
   allRules.forEach((machine) => {
     machine.inputChar(string[i]);
     if (machine.state && machine.state.name != "end") {
-      /* console.log(
+      console.log(
         "symbol " +
           string[i] +
           " changed " +
           machine.name +
           " state to " +
           machine.state.name
-      ); */
+      );
       hasActiveMachine = true;
     }
   });
 
   if (!hasActiveMachine) {
+    let tokenName = getActiveName(allRules);
     if (charsCounter > 1) {
       tokens.push({
-        token: getActiveName(allRules),
+        token: tokenName,
         lexeme: string.substring(i - charsCounter + 1, i),
       });
       i--;
     } else {
       tokens.push({
-        token: undefined,
+        token: tokenName,
         lexeme: string.substring(i, i + 1),
       });
     }
