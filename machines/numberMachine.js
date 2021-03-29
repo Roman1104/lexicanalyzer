@@ -12,12 +12,12 @@ class NumberMachine extends StateMachine {
         if (/[0-9]/.test(char)) {
           return { name: "s2" };
         } else if (char === ".") return { name: "dot" };
-        else if (/[\n;= ]/.test(char)) return { name: "end" };
+        else if (/[\n;= \+\-\*\/%<>]/.test(char)) return { name: "end" };
       },
       dot: (char) => {
         if (/[0-9]/.test(char)) {
           return { name: "dot" };
-        } else if (/[\n;= ]/.test(char)) return { name: "end" };
+        } else if (/[\n;= \+\-\*\/%<>]/.test(char)) return { name: "end" };
       },
       end: () => {
         return;

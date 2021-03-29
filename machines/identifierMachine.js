@@ -6,7 +6,7 @@ class IdentifierMachine extends StateMachine {
       begin: (char) => {
         if (/[a-z]/i.test(char)) {
           return { name: "begin" };
-        } else if (/[\n;= ]/.test(char)) return { name: "end" };
+        } else if (/[\n;= \+\-\*\/%<>]/.test(char)) return { name: "end" };
       },
       end: () => {
         return;

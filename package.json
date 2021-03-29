@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/Roman1104/lexycanalyzer/issues"
   },
-  "homepage": "https://github.com/Roman1104/lexycanalyzer#readme"
+  "homepage": "https://github.com/Roman1104/lexycanalyzer#readme",
+  "dependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^8.3.2"
+  }
 }

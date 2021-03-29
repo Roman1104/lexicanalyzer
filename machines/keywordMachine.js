@@ -10,7 +10,7 @@ class KeywordMachine extends StateMachine {
           case "l":
             return { name: "l1" };
           case "v":
-            return { name: "v1 " };
+            return { name: "v1" };
         }
       },
       //continue reading const
